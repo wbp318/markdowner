@@ -18,15 +18,16 @@
   "devDependencies": {
     "electron": "^33.0.0",
     "electron-builder": "^25.0.0",
+    "esbuild": "^0.24.0",
     "png-to-ico": "^2.1.8",
-    "sharp": "^0.33.0",
-    "esbuild": "^0.24.0"
+    "sharp": "^0.33.0"
   },
   "dependencies": {
     "github-markdown-css": "^5.7.0",
     "highlight.js": "^11.10.0",
     "marked": "^14.0.0",
-    "marked-highlight": "^2.2.0"
+    "marked-highlight": "^2.2.0",
+    "mermaid": "^11.17.2"
   },
   "build": {
     "appId": "com.wbp31.markdowner",

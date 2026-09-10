@@ -20,6 +20,7 @@ Grab the latest build from the [Releases page](https://github.com/wbp318/markdow
 - Renders GitHub Flavored Markdown (tables, task lists, strikethrough, autolinks, heading anchors)
 - Uses GitHub's own stylesheet (`github-markdown-css`) so it looks identical to github.com
 - Syntax highlighting for fenced code blocks (190+ languages via highlight.js)
+- Mermaid diagrams in ```` ```mermaid ```` fences, just like on GitHub
 - Light / dark mode (`Ctrl+D`)
 - Drag & drop any `.md` file onto the window, or `Ctrl+O`
 - Live reload: edit the file in your editor and the view updates automatically

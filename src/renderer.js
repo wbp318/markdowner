@@ -2,6 +2,7 @@
 import { marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
+import mermaid from 'mermaid';
 
 // GitHub-style heading anchors (same slug rules as github.com)
 const slugCounts = new Map();
@@ -27,6 +28,7 @@ marked.use({
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
   highlight(code, lang) {
+    if (lang === 'mermaid') return code; // rendered as a diagram after parsing
     const language = hljs.getLanguage(lang) ? lang : 'plaintext';
     return hljs.highlight(code, { language }).value;
   }
@@ -54,12 +56,44 @@ function applyTheme(t) {
   localStorage.setItem('theme', t);
 }
 applyTheme(savedTheme);
-const toggleTheme = () => applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+const toggleTheme = () => {
+  applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  if (lastDoc) render({ ...lastDoc, reload: true }); // re-render so diagrams pick up the theme
+};
 document.getElementById('btn-theme').onclick = toggleTheme;
 window.markdowner.onToggleTheme(toggleTheme);
 
+// ---- Mermaid diagrams (same as GitHub's ```mermaid fences) ----
+let mermaidSeq = 0;
+async function renderMermaid() {
+  const blocks = content.querySelectorAll('pre > code.language-mermaid');
+  if (!blocks.length) return;
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: html.getAttribute('data-theme') === 'dark' ? 'dark' : 'default',
+    securityLevel: 'strict'
+  });
+  for (const code of blocks) {
+    const pre = code.parentElement;
+    const src = code.textContent;
+    const holder = document.createElement('div');
+    holder.className = 'mermaid-diagram';
+    try {
+      const { svg } = await mermaid.render('mmd-' + (++mermaidSeq), src);
+      holder.innerHTML = svg;
+    } catch (err) {
+      const msg = String(err && err.message || err).replace(/</g, '&lt;');
+      holder.innerHTML = '<pre class="mermaid-error">Mermaid error: ' + msg + '</pre>';
+    }
+    pre.replaceWith(holder);
+  }
+  console.info(`mermaid: rendered ${content.querySelectorAll('.mermaid-diagram svg').length}/${blocks.length} diagram(s)`);
+}
+
 // ---- Rendering ----
+let lastDoc = null;
 function render({ path, content: md, reload }) {
+  lastDoc = { path, content: md };
   currentPath = path;
   const scrollY = reload ? viewer.scrollTop : 0;
   let out = marked.parse(md);
@@ -79,6 +113,7 @@ function render({ path, content: md, reload }) {
   dropZone.hidden = true;
   viewer.hidden = false;
   viewer.scrollTop = scrollY;
+  renderMermaid();
 }
 window.markdowner.onFileOpened(render);
 
