@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "A simple desktop Markdown viewer that renders files exactly like GitHub does.",
   "main": "src/main.js",
-  "author": "wbp31",
+  "author": "William Parker",
   "license": "MIT",
   "scripts": {
     "bundle": "esbuild src/renderer.js --bundle --format=iife --minify --outfile=src/renderer.bundle.js",
@@ -12,20 +12,20 @@
     "start": "electron .",
     "icon": "node build/make-icon.js",
     "prebuild": "npm run icon && npm run bundle",
-    "build": "electron-builder --win",
-    "build:portable": "npm run icon && npm run bundle && electron-builder --win portable"
+    "build": "electron-builder --win --publish never",
+    "build:portable": "npm run icon && npm run bundle && electron-builder --win portable --publish never"
   },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.0.0",
-    "esbuild": "^0.24.0",
+    "electron": "^44.0.0",
+    "electron-builder": "^26.0.0",
+    "esbuild": "^0.28.0",
     "png-to-ico": "^2.1.8",
-    "sharp": "^0.33.0"
+    "sharp": "^0.35.0"
   },
   "dependencies": {
     "github-markdown-css": "^5.7.0",
     "highlight.js": "^11.10.0",
-    "marked": "^14.0.0",
+    "marked": "^18.0.0",
     "marked-highlight": "^2.2.0",
     "mermaid": "^11.17.2"
   },
