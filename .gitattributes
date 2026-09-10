@@ -1,0 +1,35 @@
+# Make GitHub's language bar show every language in this repo.
+# By default Linguist hides "vendored", "generated", and documentation/markup files;
+# these rules force everything to count and be detectable.
+
+* text=auto
+
+# Nothing is vendored, generated, or documentation-only
+*                  linguist-vendored=false
+*                  linguist-generated=false
+*                  linguist-documentation=false
+
+# Force every file type to be detected and counted
+*.js               linguist-language=JavaScript      linguist-detectable=true
+*.html             linguist-language=HTML            linguist-detectable=true
+*.css              linguist-language=CSS             linguist-detectable=true
+*.svg              linguist-language=SVG             linguist-detectable=true
+*.md               linguist-language=Markdown        linguist-detectable=true
+*.yml              linguist-language=YAML            linguist-detectable=true
+*.yaml             linguist-language=YAML            linguist-detectable=true
+*.json             linguist-language=JSON            linguist-detectable=true
+*.sh               linguist-language=Shell           linguist-detectable=true
+*.bat              linguist-language=Batchfile       linguist-detectable=true
+*.ps1              linguist-language=PowerShell      linguist-detectable=true
+.gitattributes     linguist-language=Git-Attributes  linguist-detectable=true
+.gitignore         linguist-language=Ignore-List     linguist-detectable=true
+LICENSE            linguist-language=Text            linguist-detectable=true
+
+# Line endings
+*.sh    text eol=lf
+*.bat   text eol=crlf
+
+# Binaries
+*.ico   binary
+*.png   binary
+*.exe   binary

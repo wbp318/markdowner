@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src * data: file:; font-src 'self' data:;">
+  <title>Markdowner</title>
+  <link rel="stylesheet" href="../node_modules/github-markdown-css/github-markdown.css">
+  <link rel="stylesheet" href="../node_modules/highlight.js/styles/github.css" id="hljs-light">
+  <link rel="stylesheet" href="../node_modules/highlight.js/styles/github-dark.css" id="hljs-dark" disabled>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toolbar">
+    <button id="btn-open" title="Open (Ctrl+O)">📂 Open</button>
+    <span id="filename">No file open</span>
+    <span class="spacer"></span>
+    <button id="btn-theme" title="Toggle dark mode (Ctrl+D)">🌙</button>
+  </div>
+
+  <div id="drop-zone">
+    <div class="drop-inner">
+      <img src="../assets/logo.svg" width="96" height="96" alt="Markdowner logo">
+      <h1>Markdowner</h1>
+      <p>Drag &amp; drop a <code>.md</code> file here, or</p>
+      <button id="btn-open-big">Open a file</button>
+      <p class="hint">Ctrl+O to open &middot; Ctrl+D for dark mode &middot; Ctrl+E to export HTML</p>
+    </div>
+  </div>
+
+  <div id="viewer" hidden>
+    <article id="content" class="markdown-body"></article>
+  </div>
+
+  <div id="drag-overlay" hidden><div>Drop to open</div></div>
+
+  <script src="renderer.bundle.js"></script>
+</body>
+</html>

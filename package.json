@@ -1,0 +1,84 @@
+{
+  "name": "markdowner",
+  "productName": "Markdowner",
+  "version": "1.0.0",
+  "description": "A simple desktop Markdown viewer that renders files exactly like GitHub does.",
+  "main": "src/main.js",
+  "author": "wbp31",
+  "license": "MIT",
+  "scripts": {
+    "bundle": "esbuild src/renderer.js --bundle --format=iife --minify --outfile=src/renderer.bundle.js",
+    "prestart": "npm run bundle",
+    "start": "electron .",
+    "icon": "node build/make-icon.js",
+    "prebuild": "npm run icon && npm run bundle",
+    "build": "electron-builder --win",
+    "build:portable": "npm run icon && npm run bundle && electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.0",
+    "esbuild": "^0.24.0"
+  },
+  "dependencies": {
+    "github-markdown-css": "^5.7.0",
+    "highlight.js": "^11.10.0",
+    "marked": "^14.0.0",
+    "marked-highlight": "^2.2.0"
+  },
+  "build": {
+    "appId": "com.wbp31.markdowner",
+    "productName": "Markdowner",
+    "icon": "assets/icon.ico",
+    "files": [
+      "src/**/*",
+      "!src/renderer.js",
+      "assets/**/*",
+      "node_modules/github-markdown-css/*.css",
+      "node_modules/highlight.js/styles/github.css",
+      "node_modules/highlight.js/styles/github-dark.css"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "shortcutName": "Markdowner",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "fileAssociations": [
+      {
+        "ext": "md",
+        "name": "Markdown File",
+        "description": "Markdown document",
+        "icon": "assets/icon.ico"
+      },
+      {
+        "ext": "markdown",
+        "name": "Markdown File",
+        "description": "Markdown document",
+        "icon": "assets/icon.ico"
+      }
+    ],
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}.${ext}"
+    }
+  }
+}
